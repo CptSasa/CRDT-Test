@@ -48,7 +48,28 @@ case class Calender(calList: Dotted[AddWinsSet[Int]])  {
   
     }
   */
+  
+  /*
+    def convertCalenderFunctions[T](func: ((Calender, T) => Calender)) : Calender=>Calender = {
+      return def convertedCal(calender: Calender,generateFittingParameter)
+    }
+*/
+  def generateFittingParam[T](param: T): Int | String |Double = {
+    val typ = getType (param)
+    typ match {
+      case ("Int") => return generateSizedInt().sample.get
+      case ("String") => return "someString"
+      case ("Double") => return Gen.choose(0.0, 30.0).sample.get
+      case _ => return 0
+    }
+  }
 
+  def getType[T](param: T): String = {
+    val typeName = param.getClass.getTypeName
+    val simplifiedTypeName = typeName.substring(typeName.lastIndexOf('.') + 1)
+    simplifiedTypeName
+  }
+  
   def addCal(calender: Calender, value: Int): Calender = {
     val cal = calender.copy()
     var tmp = cal.calList
